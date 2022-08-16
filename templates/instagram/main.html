@@ -1,3 +1,5 @@
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,7 +20,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
-  <title>여기에 진스타그램 만들꺼임 </title>
+  <title> Instagram </title>
 </head>
 
 <style>
@@ -466,7 +468,7 @@ span {
         </div>
         <span class="feed_name_txt">{{ feed.user_id }}</span>
       </div>
-      <img class="feed_img" src="{{ feed.image }}">
+      <img class="feed_img" src="{% get_media_prefix %}{{ feed.image }}">
 
       <div class="feed_icon">
         <div>
@@ -645,7 +647,9 @@ span {
                   <textarea id="input_content" class="feed_content_textarea form-control col-sm-5" rows="10" placeholder="설명을 입력하세요..."></textarea>
               </div>
               <div style="width: 100%; text-align: center">
-                  <button id="button_write_feed" type="button" class="btn btn-primary" style="width: 268px"> 공유하기</button>
+                  <button id="button_write_feed" type="button" class="btn btn-primary" style="width: 268px"> 
+                    공유하기
+                  </button>
               </div>
           </div>
       </div>
@@ -783,8 +787,7 @@ function writeFeed(fd) {
       },
       complete: function() {
           console.log("무조건실행");
-          closeModal();
-          location.reload();
+          location.replace("/main")
       }
   })
 };
