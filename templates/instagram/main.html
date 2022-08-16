@@ -180,14 +180,17 @@
 <!-- 바디 영역 -->
 <div class="main_body">
   <div class="left_body">
+
+    <!-- 여기서부터 피드박스 -->
+    {% for feed in feeds %}
     <div class="border feed_box">
       <div class="feed_name">
         <div class="profile_box">
-          <img class="profile_img" src="http://file3.instiz.net/data/file3/2021/05/31/1/3/8/138e5447932848b574a216c54a4e7737.png">
+          <img class="profile_img" src="{{ feed.profile_image }}">
         </div>
-        <span class="feed_name_txt"> jin.99 </span>
+        <span class="feed_name_txt">{{ feed.user_id }}</span>
       </div>
-      <img class="feed_img" src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
+      <img class="feed_img" src="{{ feed.image }}">
 
       <div class="feed_icon">
         <div>
@@ -208,55 +211,20 @@
         </div>
       </div>
       <div class="feed_like">
-        <p class="feed_txt"> <b>좋아요 10개</b></p>
+        <p class="feed_txt"> <b>좋아요 {{ feed.like_count }}개</b></p>
       </div>
       <div class="feed_content">
-        <p class="feed_txt"> <b> jin.99 </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도 조심해야되는건 마찬가지~!</p>
+        <p class="feed_txt"> <b> {{ feed.user_id }} </b> {{ feed.content }}</p>
       </div>
       <div class="feed_reply">
         <span class="feed_txt"> <b> mychew </b> 제주도 가고 싶어요 ㅠㅠ</span>
         <span class="feed_txt"> <b> cho </b> 제주도  ㄱ ㄱ </span>
       </div>
     </div>
-    <div class="border feed_box">
-      <div class="feed_name">
-        <div class="profile_box">
-          <img class="profile_img" src="http://file3.instiz.net/data/file3/2021/05/31/1/3/8/138e5447932848b574a216c54a4e7737.png">
-        </div>
-        <span class="feed_name_txt"> jin.99 </span>
-      </div>
-      <img class="feed_img" src="https://mblogthumb-phinf.pstatic.net/MjAxNzA2MTFfMjc1/MDAxNDk3MTcyMDgyNzEw.ID5RyHWKvsVEW2NS9EQGyRYX7vUaXr7znQeuTrRRmdIg.gK7MD7VhNJPkV4_dueiWer2y-oH7NAAmEklF-6bbYyQg.JPEG.jejubyeol/%EC%97%AC%EB%A6%84%EC%97%90_%EC%A0%9C%EC%A3%BC%EB%8F%84_%EC%82%AC%EC%A7%84%EC%B0%8D%EA%B8%B0_%EC%A2%8B%EC%9D%80%EA%B3%B3.jpg?type=w800">
-
-      <div class="feed_icon">
-        <div>
-          <span class="material-icons-outlined">
-            favorite_border
-          </span>
-          <span class="material-icons-outlined">
-            mode_comment
-          </span>
-          <span class="material-icons-outlined">
-            send
-          </span>
-        </div>
-        <div>
-          <span class="material-icons-outlined">
-            turned_in_not
-          </span>
-        </div>
-      </div>
-      <div class="feed_like">
-        <p class="feed_txt"> <b>좋아요 10개</b></p>
-      </div>
-      <div class="feed_content">
-        <p class="feed_txt"> <b> jin.99 </b> 코로나라서 해외여행을 못가니 최근 제주도 가는사람이 늘고있습니다~ 제주도도 조심해야되는건 마찬가지~!</p>
-      </div>
-      <div class="feed_reply">
-        <span class="feed_txt"> <b> mychew </b> 제주도 가고 싶어요 ㅠㅠ</span>
-        <span class="feed_txt"> <b> cho </b> 제주도  ㄱ ㄱ </span>
-      </div>
-    </div>
+    {% endfor %}
+    <!-- 여기까지 피드박스 -->
   </div>
+
   <div class="right_body">
     <div class="feed_name" style="justify-content: space-between">
       <div style="display: flex; align-items: center; ">
