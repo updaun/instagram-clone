@@ -6,7 +6,7 @@ from .models import Feed
 class Main(APIView):
     def get(self, request):
 
-        feed_list = Feed.objects.all()
+        feed_list = Feed.objects.all().order_by('-id')
 
         # for feed in feed_list:
         #     print(feed.content)
