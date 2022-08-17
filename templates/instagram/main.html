@@ -512,11 +512,20 @@ span {
         <p class="feed_txt"> <b>좋아요 {{ feed.like_count }}개</b></p>
       </div>
       <div class="feed_content">
-        <p class="feed_txt"> <b> {{ feed.user_id }} </b> {{ feed.content }}</p>
+        <p class="feed_txt"> <b> {{ feed.nickname }} </b> {{ feed.content }}</p>
       </div>
-      <div class="feed_reply">
-        <span class="feed_txt"> <b> mychew </b> 제주도 가고 싶어요 ㅠㅠ</span>
-        <span class="feed_txt"> <b> cho </b> 제주도 ㄱ ㄱ </span>
+      <div id="reply_list_{{ feed.id }}">
+        {% for reply in feed.reply_list %}
+          <div class="feed_reply">
+            <span class="feed_txt"> <b style="margin-right: 10px;">{{ reply.nickname }}</b>{{ reply.reply_content }}</span>
+          </div>
+        {% endfor %}
+      </div>
+      <div style="display: flex; flex-direction: row; align-items: center; border-top: 1px solid lightgray;">
+        <input id="reply_{{feed.id}}" type="text" class="form-control" style="box-shadow: none; border: none; outline: none;" placeholder="댓글 달기..">
+        <div feed_id="{{feed.id}}" class="upload_reply" style="width: 50px; color: cornflowerblue; font-weight: bold;">
+          게시
+        </div>
       </div>
     </div>
     {% endfor %}
@@ -757,8 +766,6 @@ span {
 $('#button_write_feed').on('click', ()=>{
   const image = $('#input_image').css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1');
   const content = $('#input_content').val();
-  const profile_image = $('#input_profile_image').attr('src');
-  const user_id = $('#input_user_id').text();
 
   const file = files[0];
 
@@ -767,8 +774,6 @@ $('#button_write_feed').on('click', ()=>{
   fd.append('file', file);
   fd.append('image', image);
   fd.append('content', content);
-  fd.append('profile_image', profile_image);
-  fd.append('user_id', user_id);
 
   if(image.length <= 0)
   {
@@ -777,14 +782,6 @@ $('#button_write_feed').on('click', ()=>{
   else if(content.length <= 0)
   {
       alert("설명을 입력하세요");
-  }
-  else if(profile_image.length <= 0)
-  {
-      alert("프로필 이미지가 비어있습니다.");
-  }
-  else if(user_id.length <= 0)
-  {
-      alert("사용자 id가 없습니다.");
   }
   else{
       writeFeed(fd);
@@ -811,6 +808,37 @@ function writeFeed(fd) {
       }
   })
 };
+
+$(".upload_reply").click(function (event){
+  let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+  let reply_id = 'reply_' + feed_id;
+  let reply_content = $('#'+reply_id).val();
+
+  console.log(reply_content)
+
+  if(reply_content.length <= 0){
+    alert("댓글을 입력하세요");
+    return 0;
+  }
+
+  $.ajax({
+    url: "/content/reply/",
+    data: {
+      feed_id: feed_id,
+      reply_content: reply_content
+    },
+    method: "POST",
+    success: function (data){
+      $('#reply_list_'+feed_id).append('<div class="feed_reply"><span class="feed_txt"> <b style="margin-right: 10px;">{{ user.nickname }}</b>'+ reply_content +'</span></div>')
+    },
+    error:function (request, status, error){
+        let data = JSON.parse(request.responseText);
+        console.log(data.message);
+        alert(data.message);
+    }
+});
+
+});
 
 </script>
 

@@ -643,8 +643,6 @@ span {
 $('#button_write_feed').on('click', ()=>{
   const image = $('#input_image').css("background-image").replace(/^url\(['"](.+)['"]\)/, '$1');
   const content = $('#input_content').val();
-  const profile_image = $('#input_profile_image').attr('src');
-  const user_id = $('#input_user_id').text();
 
   const file = files[0];
 
@@ -653,8 +651,6 @@ $('#button_write_feed').on('click', ()=>{
   fd.append('file', file);
   fd.append('image', image);
   fd.append('content', content);
-  fd.append('profile_image', profile_image);
-  fd.append('user_id', user_id);
 
   if(image.length <= 0)
   {
@@ -663,14 +659,6 @@ $('#button_write_feed').on('click', ()=>{
   else if(content.length <= 0)
   {
       alert("설명을 입력하세요");
-  }
-  else if(profile_image.length <= 0)
-  {
-      alert("프로필 이미지가 비어있습니다.");
-  }
-  else if(user_id.length <= 0)
-  {
-      alert("사용자 id가 없습니다.");
   }
   else{
       writeFeed(fd);
