@@ -484,9 +484,9 @@ span {
     <div class="border feed_box">
       <div class="feed_name">
         <div class="profile_box">
-          <img class="profile_img" src="{% get_media_prefix %}{{ user.profile_image }}">
+          <img class="profile_img" src="{% get_media_prefix %}{{ feed.profile_image }}">
         </div>
-        <span class="feed_name_txt">{{ feed.user_id }}</span>
+        <span class="feed_name_txt">{{ feed.nickname }}</span>
       </div>
       <img class="feed_img" src="{% get_media_prefix %}{{ feed.image }}">
 
