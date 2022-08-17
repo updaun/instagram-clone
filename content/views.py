@@ -8,6 +8,8 @@ from .models import Feed
 import os
 from instagram.settings import MEDIA_ROOT
 
+from user.models import User
+
 class Main(APIView):
     def get(self, request):
 
@@ -16,7 +18,18 @@ class Main(APIView):
         # for feed in feed_list:
         #     print(feed.content)
 
-        return render(request, "instagram/main.html", context={"feeds":feed_list})
+        # 세션 정보 확인
+        print('로그인한 사용자 :', request.session['email'])
+        email = request.session['email']
+        if email is None:
+            return render(request, "user/login.html")
+
+        user = User.objects.filter(email=email).first()
+
+        if user is None:
+            return render(request, "user/login.html")
+
+        return render(request, "instagram/main.html", context={"feeds":feed_list, "user":user})
 
 
 class UploadFeed(APIView):
