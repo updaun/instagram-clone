@@ -48,3 +48,8 @@ class Login(APIView):
             return Response(status=500, data=dict(massage="회원정보가 잘못되었습니다."))
 
             
+class Logout(APIView):
+    def get(self, request):
+        # 세션 삭제
+        request.session.flush()
+        return render(request, 'user/login.html')

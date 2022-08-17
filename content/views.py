@@ -18,9 +18,9 @@ class Main(APIView):
         # for feed in feed_list:
         #     print(feed.content)
 
-        # 세션 정보 확인
-        print('로그인한 사용자 :', request.session['email'])
-        email = request.session['email']
+        # 세션 정보 확인 (세션 초기화시 keyerror 발생)
+        # print('로그인한 사용자 :', request.session['email'])
+        email = request.session.get('email', None)
         if email is None:
             return render(request, "user/login.html")
 
