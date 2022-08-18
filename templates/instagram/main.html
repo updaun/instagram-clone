@@ -504,8 +504,8 @@ span {
           </span>
         </div>
         <div>
-          <span class="material-icons-outlined">
-            turned_in_not
+          <span id="bookmark_{{ feed.id }}" feed_id="{{ feed.id }}" class="bookmark material-icons-outlined" style="color: black; cursor: pointer;">
+            {% if feed.is_marked %}bookmark{% else %}bookmark_border{% endif %}
           </span>
         </div>
       </div>
@@ -859,6 +859,36 @@ $('.favorite').click(function(event){
     data: {
       feed_id: feed_id,
       favorite_text: favorite_text
+    },
+    method: "POST",
+    success: function (data){
+      console.log("성공");
+    },
+    error:function (request, status, error){
+      console.log("에러");
+    }
+  });
+
+});
+
+$('.bookmark').click(function(event){
+  let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+  let bookmark_id = event.target.id;
+  let bookmark_text = $.trim($('#'+bookmark_id).html());
+  console.log(bookmark_id);
+  console.log(bookmark_text);
+
+  if(bookmark_text=='bookmark'){
+    $('#'+bookmark_id).html('bookmark_border');
+  }else{
+    $('#'+bookmark_id).html('bookmark');
+  }
+
+  $.ajax({
+    url: "/content/bookmark/",
+    data: {
+      feed_id: feed_id,
+      bookmark_text: bookmark_text
     },
     method: "POST",
     success: function (data){
