@@ -492,9 +492,10 @@ span {
 
       <div class="feed_icon">
         <div>
-          <span class="material-icons-outlined">
-            favorite_border
+          <span id="favorite_{{ feed.id }}" feed_id="{{ feed.id }}" class="favorite material-icons-outlined" style="color: red; cursor: pointer;">
+            {% if feed.is_liked %}favorite{% else %}favorite_border{% endif %}
           </span>
+                    
           <span class="material-icons-outlined">
             mode_comment
           </span>
@@ -836,7 +837,37 @@ $(".upload_reply").click(function (event){
         console.log(data.message);
         alert(data.message);
     }
+  });
+
 });
+
+$('.favorite').click(function(event){
+  let feed_id = event.target.attributes.getNamedItem('feed_id').value;
+  let favorite_id = event.target.id;
+  let favorite_text = $.trim($('#'+favorite_id).html());
+  console.log(favorite_id);
+  console.log(favorite_text);
+
+  if(favorite_text=='favorite'){
+    $('#'+favorite_id).html('favorite_border');
+  }else{
+    $('#'+favorite_id).html('favorite');
+  }
+
+  $.ajax({
+    url: "/content/like/",
+    data: {
+      feed_id: feed_id,
+      favorite_text: favorite_text
+    },
+    method: "POST",
+    success: function (data){
+      console.log("성공");
+    },
+    error:function (request, status, error){
+      console.log("에러");
+    }
+  });
 
 });
 
